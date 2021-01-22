@@ -203,10 +203,6 @@ pub unsafe fn get_command_flag_cat(module_accessor: &mut app::BattleObjectModule
 // Necessary to ensure we visualize on the first frame of the hitbox
 #[skyline::hook(replace = sv_animcmd::ATTACK)]
 unsafe fn handle_attack(lua_state: u64) {
-    if is_training_mode() {
-        mod_handle_attack(lua_state);
-    }
-
     original!()(lua_state);
 }
 
@@ -268,9 +264,7 @@ unsafe fn mod_handle_attack(lua_state: u64) {
 
 #[skyline::hook(replace = sv_animcmd::CATCH)]
 unsafe fn handle_catch(lua_state: u64) {
-    if is_training_mode() {
         mod_handle_catch(lua_state);
-    }
 
     original!()(lua_state);
 }
@@ -315,10 +309,6 @@ pub unsafe fn handle_set_rebound(
     module_accessor: *mut app::BattleObjectModuleAccessor,
     rebound: bool,
 ) {
-    if is_training_mode() {
-        mod_handle_handle_set_rebound(module_accessor, rebound);
-    }
-
     original!()(module_accessor, rebound);
 }
 
